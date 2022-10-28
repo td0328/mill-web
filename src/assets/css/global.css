@@ -1,0 +1,39 @@
+html,bady,#app{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.common-layout{
+    height: 100%;
+}
+.align-center{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+/* 垂直、水平居中 */
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*垂直居中*/
+.center-align{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+/*水平居中*/
+.center-justify{
+    display: flex;
+    justify-content: center;/*水平居中*/
+    height: 100%;
+}
+/*左浮动*/
+.float-left{
+    float: left;
+}
+/*右浮动*/
+.float-right{
+    float: right;
+}
