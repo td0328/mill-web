@@ -8,7 +8,7 @@
                    highlight-current-row
                    @selection-change="changeCheckBoxValueTable"
                    :header-cell-style="headerStyleTable">
-          <el-table-column type="selection" width="30"></el-table-column>
+              <el-table-column type="selection" width="30"></el-table-column>
           <el-table-column prop="tableName" :show-overflow-tooltip=true  label="表名称">
             <template #header>
               <el-button @click="this.dialog=true" class="linkColour" >连接库</el-button>

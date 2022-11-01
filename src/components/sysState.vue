@@ -11,7 +11,7 @@
           <template #header>
             <el-button @click="this.dialogDataSource=true">连接库</el-button>
             <el-button @click="addStateClass" >新增</el-button>
-            <el-button @click="deleteStateClass" >删除</el-button>
+            <el-button @click="deleteStateClass">删除</el-button>
           </template>
         </el-table-column>
         <el-table-column :show-overflow-tooltip=true prop="content" label="操作"></el-table-column>

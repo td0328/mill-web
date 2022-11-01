@@ -82,6 +82,12 @@ export default {
           "path": "/homePage/sysState",     //菜单项所对应的路由路径
           "title": "系统状态配置",     //菜单项名称
           "subMenu": []        //是否有子菜单，若没有，则为[]
+        },
+        {
+          "icon":"TakeawayBox",
+          "path": "/homePage/sysDictClass",     //菜单项所对应的路由路径
+          "title": "数据字典",     //菜单项名称
+          "subMenu": []        //是否有子菜单，若没有，则为[]
         }
       ],
     }
@@ -99,6 +105,10 @@ export default {
     this.$routers.addRoute('homePage',{
       path: 'sysState',
       component: ()=> import('../components/sysState.vue'),
+    })
+    this.$routers.addRoute('homePage',{
+      path: 'sysDictClass',
+      component: ()=> import('../components/sysDictClass.vue'),
     })
   }
 }
