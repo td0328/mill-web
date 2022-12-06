@@ -9,17 +9,19 @@
  */
 import axios from 'axios'
 import qs from 'qs'
+import { ElMessage } from 'element-plus'
+import router from '@/assets/utils/routes.js'
 
 // 创建一个独立的axios实例
 const service = axios.create({
     // 设置baseUr地址,如果通过proxy跨域可直接填写base地址
-    baseURL: '/api',
+    baseURL: 'http://127.0.0.1:8081',
     // 定义统一的请求头部
     headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
     },
     // 配置请求超时时间
-    timeout: 10000,
+    timeout: 60000,
     // 如果用的JSONP，可以配置此参数带上cookie凭证，如果是代理和CORS不用设置
     withCredentials: true,
     paramsSerializer: params => {
@@ -28,38 +30,35 @@ const service = axios.create({
         //return qs.stringify(params)
     }
 });
-// 请求拦截
-/*
-service.interceptors.request.use(config => {
-    // 自定义header，可添加项目token
-    config.headers.token = 'token';
-    return config;
-});
+service.defaults.withCredentials = true;
+// 添加请求拦截器，在请求头中加token
+service.interceptors.request.use(
+    config => {
+        //判断token是否存在
+        if (localStorage.getItem('UserToken')) {
+            // 在请求头中添加token
+            config.headers.UserToken = localStorage.getItem('UserToken');
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    });
+
 // 返回拦截
-
-service.interceptors.response.use((response)=>{
-
-
+service.interceptors.response.use(response => {
     //console.log('拦截器')
     // 获取接口返回结果
+    //登录状态失效后删除token
     const res = response.data;
-    // code为0，直接把结果返回回去，这样前端代码就不用在获取一次data.
-    if(res.code === 0){
-        return res;
-    }else if(res.code === 10000){
-        // 10000假设是未登录状态码
-        this.$message.warning(res.message);
-        // 也可使用router进行跳转
-        //window.location.href = '/#/login';
-        return res;
-    }else{
-        // 错误显示可在service中控制，因为某些场景我们不想要展示错误
-        // Message.error(res.message);
-        return res;
+    if(res.code>=2000&&res.code<3000){
+        ElMessage.warning(res.msg);
+        localStorage.removeItem("UserToken")
+        router.push('/login').then()
     }
-
-},()=>{
-    this.$message.error('网络请求异常，请稍后重试!');
+    return response
+    //console.log(res)
+},error => {
+    return Promise.reject(error)
 });
-*/
 export default service;

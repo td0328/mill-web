@@ -4,6 +4,8 @@
  */
 import { ElLoading } from "element-plus";
 import { ElMessage } from 'element-plus'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import instance from './interceptor'
 /**
  * 核心函数，可通过它处理一切请求数据，并做横向扩展
@@ -15,6 +17,7 @@ import instance from './interceptor'
  * @param error 本次是否显示错误
  */
 function request(url,params,options={loading:true,mock:false,error:true},method){
+    NProgress.start()
     let loadingInstance;
     // 请求前loading
     if(options.loading)loadingInstance=ElLoading.service({lock: true,text: '加载中',background: 'rgba(0, 0, 0, 0.1)'});
@@ -41,10 +44,13 @@ function request(url,params,options={loading:true,mock:false,error:true},method)
                 if(options.error)ElMessage.error(res.statusText);
                 reject(res);
             }
+            NProgress.done()
         }).catch((error)=>{
             ElMessage.error(error.message)
+            NProgress.done()
         }).finally(()=>{
-            loadingInstance.close();
+            if(options.loading)loadingInstance.close();
+            NProgress.done()
         })
     })
 }
@@ -63,6 +69,29 @@ function put(url,params,options){
 function del(url,params,options){
     params._method = "delete"
     return request(url,params,options,'post')
+}
+async function asyncPost(url,params){
+    let loadingInstance=ElLoading.service({lock: true,text: '加载中',background: 'rgba(0, 0, 0, 0.1)'});
+    NProgress.start()
+    let res = {};
+    let method = 'post'
+    let data = {params:params}
+    await instance({
+        url,
+        method,
+        ...data,
+    }).then((s)=>{
+        NProgress.done()
+        res = s.data
+    }).catch((error)=>{
+        ElMessage.error(error.message)
+        NProgress.done()
+        res = null
+    }).finally(()=>{
+        loadingInstance.close();
+        NProgress.done()
+    })
+    return res;
 }
 function submit(url,method,params,options){
     method = method.toLowerCase()
@@ -84,5 +113,5 @@ function submit(url,method,params,options){
     }
 }
 export default {
-    get,post,put,del,submit
+    get,post,put,del,submit,asyncPost
 }

@@ -37,3 +37,20 @@ html,bady,#app{
 .float-right{
     float: right;
 }
+.el-dialog__body{
+    padding: 0;
+}
+.flx-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main{
+    width: 100%;
+    height: 100%;
+}
+
+.innerMain{
+    width: 100%;
+    height: 100%;
+}
