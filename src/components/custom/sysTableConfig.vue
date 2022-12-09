@@ -149,14 +149,14 @@
                   <el-form-item label="显示列" prop="selectorShow">
                     <el-input v-model="columnConfig.selectorShow" readonly>
                       <template #suffix>
-                        <el-icon @click="this.dialogSelectorShow=true"><Grid /></el-icon>
+                        <el-icon @click="dialogSelectorShow=true"><Grid /></el-icon>
                       </template>
                     </el-input>
                   </el-form-item>
                   <el-form-item label="查询列" prop="selectorQuery">
                     <el-input v-model="columnConfig.selectorQuery" readonly>
                       <template #suffix>
-                        <el-icon @click="this.dialogSelectorQuery=true"><Grid /></el-icon>
+                        <el-icon @click="dialogSelectorQuery=true"><Grid /></el-icon>
                       </template>
                     </el-input>
                   </el-form-item>
@@ -301,7 +301,7 @@
         v-model="dialogTableTitle"
         title="配置表"
         width="350px"
-        @before-close="this.dialogTableTitle=false"
+        @before-close="dialogTableTitle=false"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
         <el-form :rules="fromRules" ref="titleFrom" :model="tableConfig" label-width="80px">
@@ -312,7 +312,7 @@
       </el-scrollbar>
       <template #footer>
         <el-button type="primary" @click="tableTitle">确认</el-button>
-        <el-button @click="this.dialogTableTitle=false">取消</el-button>
+        <el-button @click="dialogTableTitle=false">取消</el-button>
       </template>
     </el-dialog>
     <!-- 数据选选择显示列 -->

@@ -33,7 +33,7 @@
           <el-table-column prop="name" :show-overflow-tooltip=true  label="名称"></el-table-column>
 
           <el-table-column align="right">
-            <template v-if="this.state.classId!=null&&this.state.classId!==''" #header>
+            <template v-if="state.classId!=null&&state.classId!==''" #header>
               <el-button v-if="toolUtils.getPermission(name,'add')" @click="addState" >新增</el-button>
               <el-button v-if="toolUtils.getPermission(name,'delete')" @click="deleteState" >删除</el-button>
             </template>
@@ -90,7 +90,7 @@
         v-model="dialogStateClass"
         title="系统状态类型"
         width="350px"
-        @before-close="this.dialogStateClass=false"
+        @before-close="dialogStateClass=false"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
         <el-form :rules="rules" ref="stateClassFrom" :model="stateClass" label-width="80px">
@@ -101,14 +101,14 @@
       </el-scrollbar>
       <template #footer>
         <el-button type="primary" @click="saveStateClass">确认</el-button>
-        <el-button @click="this.dialogStateClass=false">取消</el-button>
+        <el-button @click="dialogStateClass=false">取消</el-button>
       </template>
     </el-dialog>
     <el-dialog
         v-model="dialogState"
         title="系统状态"
         width="350px"
-        @before-close="this.dialogState=false"
+        @before-close="dialogState=false"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
         <el-form :rules="rules" ref="stateFrom" :model="state" label-width="80px">
@@ -122,7 +122,7 @@
       </el-scrollbar>
       <template #footer>
         <el-button type="primary" @click="saveState">确认</el-button>
-        <el-button @click="this.dialogState=false">取消</el-button>
+        <el-button @click="dialogState=false">取消</el-button>
       </template>
     </el-dialog>
   </div>

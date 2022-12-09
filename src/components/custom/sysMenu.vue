@@ -155,7 +155,7 @@
         v-model="dialogSysMenu"
         title="菜单配置"
         width="350px"
-        @before-close="this.dialogSysMenu=false"
+        @before-close="dialogSysMenu=false"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
         <el-form :rules="rules" ref="sysMenuFrom" :model="sysMenu" label-width="80px">
@@ -191,7 +191,7 @@
       </el-scrollbar>
       <template #footer>
         <el-button type="primary" @click="saveSysMenu">确认</el-button>
-        <el-button @click="this.dialogSysMenu=false">取消</el-button>
+        <el-button @click="dialogSysMenu=false">取消</el-button>
       </template>
     </el-dialog>
     <!--权限配置-->
@@ -199,7 +199,7 @@
         v-model="dialogSysPermission"
         title="权限配置"
         width="350px"
-        @before-close="this.dialogSysPermission=false"
+        @before-close="dialogSysPermission=false"
         style="padding: 0"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
@@ -214,7 +214,7 @@
       </el-scrollbar>
       <template #footer>
         <el-button type="primary" @click="saveSysPermission">确认</el-button>
-        <el-button @click="this.dialogSysPermission=false">取消</el-button>
+        <el-button @click="dialogSysPermission=false">取消</el-button>
       </template>
     </el-dialog>
     <!--请求配置-->
@@ -222,7 +222,7 @@
         v-model="dialogSysRequestPath"
         title="请求配置"
         width="350px"
-        @before-close="this.dialogSysRequestPath=false"
+        @before-close="dialogSysRequestPath=false"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
         <el-form :rules="rules" ref="fromSysRequestPath" :model="sysRequestPath" label-width="80px">
@@ -236,7 +236,7 @@
       </el-scrollbar>
       <template #footer>
         <el-button type="primary" @click="saveSysRequestPath">确认</el-button>
-        <el-button @click="this.dialogSysRequestPath=false">取消</el-button>
+        <el-button @click="dialogSysRequestPath=false">取消</el-button>
       </template>
     </el-dialog>
   </div>

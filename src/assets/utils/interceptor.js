@@ -15,7 +15,7 @@ import router from '@/assets/utils/routes.js'
 // 创建一个独立的axios实例
 const service = axios.create({
     // 设置baseUr地址,如果通过proxy跨域可直接填写base地址
-    baseURL: 'http://127.0.0.1:8081',
+    baseURL: 'http://116.205.138.146:8081',
     // 定义统一的请求头部
     headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",

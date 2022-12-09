@@ -81,7 +81,7 @@
         v-model="dialogSysDictClass"
         title="数据字典类型"
         width="350px"
-        @before-close="this.dialogSysDictClass=false"
+        @before-close="dialogSysDictClass=false"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
         <el-form :rules="rulesSysDictClass" ref="sysDictClassFrom" :model="sysDictClass" label-width="80px">
@@ -92,7 +92,7 @@
       </el-scrollbar>
       <template #footer>
         <el-button type="primary" @click="saveDictClass">确认</el-button>
-        <el-button @click="this.dialogSysDictClass=false">取消</el-button>
+        <el-button @click="dialogSysDictClass=false">取消</el-button>
       </template>
     </el-dialog>
   </div>

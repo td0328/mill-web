@@ -31,7 +31,7 @@
     <el-container>
       <el-header style="height: 53px;background: #FFFFFF;border-radius: 0 0 0 0;opacity: 1;padding-left: 25px;padding-right: 25px;">
         <div class="tool-bar-lf">
-          <el-icon class="collapse-icon" @click="this.isCollapse = !this.isCollapse">
+          <el-icon class="collapse-icon" @click="isCollapse = !isCollapse">
             <component :is="isCollapse ? 'expand' : 'fold'"></component>
           </el-icon>
           <el-breadcrumb :separator-icon="ArrowRight">

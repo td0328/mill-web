@@ -15,7 +15,7 @@
         </div>
         <div style="display:table-cell;height: 100%;width:180px;text-align: right">
           <el-button type="primary" icon="Search" @click="getSysRoleByQueryWrapper">查询</el-button>
-          <el-button type="primary" icon="Refresh" @click="this.$refs.refFormQuery.resetFields();">重置</el-button>
+          <el-button type="primary" icon="Refresh" @click="refFormQuery.resetFields();">重置</el-button>
         </div>
       </el-header>
       <el-main style="background-color: #FFFFFF;--el-main-padding: 15px;">
@@ -73,7 +73,7 @@
         v-model="dialogSysRole"
         :title="dialogTitleSysRole"
         width="600px"
-        @before-close="this.dialogSysRole=false"
+        @before-close="dialogSysRole=false"
         @close="closeDialogSysRole"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
@@ -102,7 +102,7 @@
       </el-scrollbar>
       <template #footer>
         <el-button v-if="isBtnSave" type="primary" @click="saveSysRole">确认</el-button>
-        <el-button @click="this.dialogSysRole=false">取消</el-button>
+        <el-button @click="dialogSysRole=false">取消</el-button>
       </template>
     </el-dialog>
   </div>
@@ -115,7 +115,7 @@ import request from '@/assets/utils/request.js'
 import toolUtils from '@/assets/utils/toolUtils.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 const name = ref("sysRole")
-
+const refFormQuery = ref()
 let queryWrapper =ref({
   roleName:'',
   pageNum:1,
@@ -163,7 +163,6 @@ let dialogSysRole = ref(false)
 const showAddSysRole = () => {
   sysRole.value = {}
   dialogTitleSysRole.value = '新增'
-  //this.$refs['refTreeSysMenu'].setCheckedKeys([], false)
   treeSysMenu.value = []
   request.post('/getTreeSysMenu').then((res={})=>{
     treeSysMenu.value = res.data.tree
@@ -277,188 +276,6 @@ const deleteSysRoleByIds = () => {
 const customNodeClass = (data) => {
   return data['className']
 }
-/*
-export default {
-  name: "sysRole",
-  data() {
-    return {
-      queryWrapper:{
-        roleName:'',
-        pageNum:1,
-        pageSize:20
-      },
-      rulesQuery: this.$reactive({}),
-      pageDataSysRole: {
-        total:0
-      },
-      heightTable:0,
-      heightDialogScrollbar:0,
-      checkBoxDataSysRole:[],
-      dialogSysRole:false,
-      sysRole:{
-        roleName:'',
-        roleDescription:''
-      },
-      rulesSysRole: this.$reactive({
-        roleName: [{ required: true, message: '请输入', trigger: 'change' }],
-        roleDescription: [{ required: true, message: '请输入', trigger: 'change' }],
-      }),
-      treeSysMenu:[],
-      saveUrlSysRole:'',
-      dialogTitleSysRole:'',
-      defaultCheckedKeysTreeSysMenu:[],
-
-    }
-  },
-  methods:{
-    headerCellStyle(){
-      return {
-        'background-color': '#F2F6FC',
-        'text-align': 'center',
-        'font-weight': 'normal',
-        'height':'40'
-      }
-    },
-    changeCheckBoxValueSysRole(val){
-      let _this = this
-      _this.checkBoxDataSysRole = []
-      val.forEach(function(item) {
-        if (_this.checkBoxDataSysRole.indexOf(item.id)===-1) {
-          _this.checkBoxDataSysRole.push(item.id);
-        }
-      })
-    },
-    getSysRoleByQueryWrapper(){
-      let _this = this;
-      _this.$request.post('/getSysRoleByQueryWrapper',_this.queryWrapper).then((res={})=>{
-        _this.pageDataSysRole = res
-      })
-    },
-    customNodeClass (data){
-      return data['className']
-    },
-    showAddSysRole(){
-      this.sysRole = {}
-      this.dialogTitleSysRole = '新增'
-      //this.$refs['refTreeSysMenu'].setCheckedKeys([], false)
-      let _this = this;
-      _this.$request.post('/getTreeSysMenu').then((res={})=>{
-        _this.treeSysMenu = res.data.tree
-        _this.saveUrlSysRole = '/addSysRole'
-        _this.$nextTick(() => {
-          _this.$refs['refTreeSysMenu'].setCheckedKeys([])
-        })
-        _this.dialogSysRole = true
-      })
-    },
-    showEditSysRole(idx,row){
-      let _this = this;
-      _this.$nextTick(() => {
-        _this.$refs['refTreeSysMenu'].setCheckedKeys([])
-      })
-      this.dialogTitleSysRole = '编辑'
-      this.sysRole.id = row['id']
-      this.sysRole.roleName = row['roleName']
-      this.sysRole.roleDescription = row['roleDescription']
-      _this.$request.post('/getTreeSysMenu',{id:row['id']}).then((res={})=>{
-        _this.treeSysMenu = res.data.tree
-        _this.defaultCheckedKeysTreeSysMenu = res.data.default
-        _this.saveUrlSysRole = '/editSysRole'
-        _this.$nextTick(() => {
-          _this.dialogSysRole = true
-        })
-
-      })
-    },
-    saveSysRole(){
-      let _this = this
-      //获取所有选中的子节点
-      let checkedKeys = _this.$refs['refTreeSysMenu'].getCheckedKeys()
-      //获取所有选中的父节点（半选中）
-      let hafCheckedKeys = _this.$refs['refTreeSysMenu'].getHalfCheckedKeys()
-      //组合
-      let menuIds = checkedKeys.concat(hafCheckedKeys)
-      if(menuIds.length===0){
-        _this.$message.error("请选择角色权限")
-        return
-      }
-      _this.sysRole.menuIds = menuIds
-      this.$refs.fromSysRole.validate((valid) => {
-        if(valid) {
-          _this.$request.post(_this.saveUrlSysRole,_this.sysRole).then((res={})=>{
-            _this.getSysRoleByQueryWrapper();
-            _this.dialogSysRole = false
-            _this.$message.success(res.msg)
-            // 此处只接收成功数据，失败数据不返回
-          })
-        }
-      })
-    },
-    deleteSysRoleById(idx,row){
-      let _this = this
-      let params = {ids:[row['id']]}
-      let contentText = '你确认要删除这条信息吗？'
-      _this.$ElMessageBox.confirm(contentText,'警告',{
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        //type: 'error',
-      }).then(() => {
-        _this.$request.post('/deleteSysRoleByIds',params).then((res={})=>{
-          if(res.success){
-            _this.getSysRoleByQueryWrapper();
-            _this.$message.success(res.msg)
-          }else{
-            _this.$message.error(res.msg)
-          }
-
-        })
-      }).catch(() =>{})
-    },
-    deleteSysRoleByIds(){
-      let _this = this
-      if(_this.checkBoxDataSysRole.length>0){
-        let params = {ids:_this.checkBoxDataSysRole}
-        let contentText = '你确认要删除这'+_this.checkBoxDataSysRole.length+'条数据吗？'
-        _this.$ElMessageBox.confirm(contentText,'警告',{
-          confirmButtonText: '确认',
-          cancelButtonText: '取消',
-          //type: 'error',
-        }).then(() => {
-          _this.$request.post('/deleteSysRoleByIds',params).then((res={})=>{
-            if(res.success){
-              _this.getSysRoleByQueryWrapper();
-              _this.$message.success(res.msg)
-            }else{
-              _this.$message.error(res.msg)
-            }
-          })
-        }).catch(() =>{})
-      }else{
-        _this.$message.error('请选择要删除的数据')
-      }
-    },
-
-  },
-  mounted:function(){
-    let _this = this
-    _this.getSysRoleByQueryWrapper();
-    //设置高度
-    let heightHeader= this.$refs.refHeader.$el.offsetHeight;
-    if(heightHeader>0)heightHeader+=10
-    let clearanceTable = 53 + 12 +12 + heightHeader + 32 + 10 + 15 + 15 + 36 + 5
-    let clearanceDialogScrollbar = 54  + 62
-    this.$nextTick(function () {
-      _this.heightDialogScrollbar = document.body.clientHeight * 0.7  - clearanceDialogScrollbar;
-      _this.heightTable = document.body.clientHeight - clearanceTable;
-      window.onresize = function() {
-        _this.heightDialogScrollbar = document.body.clientHeight * 0.7  - clearanceDialogScrollbar;
-        _this.heightTable =  document.body.clientHeight - clearanceTable;
-      }
-    })
-  }
-}
-
- */
 </script>
 
 <style>

@@ -15,7 +15,7 @@
         </div>
         <div style="display:table-cell;height: 100%;width:180px;text-align: right">
           <el-button type="primary" icon="Search" @click="getSysUserByQueryWrapper">查询</el-button>
-          <el-button type="primary" icon="Refresh" @click="this.$refs.refFormQuery.resetFields();">重置</el-button>
+          <el-button type="primary" icon="Refresh" @click="refFormQuery.resetFields();">重置</el-button>
         </div>
       </el-header>
       <el-main style="background-color: #FFFFFF;--el-main-padding: 15px;">
@@ -82,7 +82,7 @@
         v-model="dialogSysUser"
         :title="dialogTitleSysUser"
         width="350px"
-        @before-close="this.dialogSysUser=false"
+        @before-close="dialogSysUser=false"
     >
       <el-scrollbar :max-height="heightDialogScrollbar" wrap-style="padding: 10px 20px 0 20px;">
         <el-form :rules="rulesSysUser" ref="fromSysUser" :model="sysUser" label-width="80px">
@@ -101,7 +101,7 @@
       </el-scrollbar>
       <template #footer>
         <el-button v-if="isBtnSave" type="primary" @click="saveSysUser(fromSysUser)">确认</el-button>
-        <el-button @click="this.dialogSysUser=false">取消</el-button>
+        <el-button @click="dialogSysUser=false">取消</el-button>
       </template>
     </el-dialog>
   </div>
@@ -112,6 +112,7 @@ import request from '@/assets/utils/request.js'
 import toolUtils from '@/assets/utils/toolUtils.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 const name = ref("sysUser")
+const refFormQuery = ref()
 //条件查询
 let queryWrapper =ref({
   userName:'',
