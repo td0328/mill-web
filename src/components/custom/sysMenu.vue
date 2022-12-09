@@ -8,7 +8,7 @@
           </el-col>
           <el-col :span="18" >
             <div style="float: right;">
-              <el-button @click="this.dialogDataSource=true" class="linkColour" >连接库</el-button>
+              <el-button @click="dialogDataSource=true" class="linkColour" >连接库</el-button>
               <el-button v-if="isShowBtn&&toolUtils.getPermission(name,'add')" type="primary" icon="Plus" @click="addSysMenu">新增</el-button>
               <el-button v-if="isShowBtn&&toolUtils.getPermission(name,'delete')" type="danger" icon="Delete" @click="deleteSysMenu">删除</el-button>
             </div>
@@ -173,7 +173,7 @@
           </el-form-item>
           <el-form-item v-if="sysMenu.pid!==''" label="菜单类型" prop="type">
             <el-select v-model="sysMenu.type" :disabled="disabled" placeholder="请选择" style="width: 100%;">
-              <el-option  label="表结构页面" value="0" />
+              <el-option  label="生成页面" value="0" />
               <el-option  label="定制页面" value="1" />
               <el-option  label="系统页面" value="2" />
             </el-select>
@@ -334,11 +334,11 @@ const addSysMenu = () =>{
   sysMenu.value = {}
   sysMenu.value.id = ''
   sysMenu.value.pid = ''
-  sysMenu.value.type = '0'
+  sysMenu.value.type = null
   dialogSysMenu.value = true
 }
 const showEdit = (idx,row) => {
-  saveUrlSysMenu.value = '/editSysMenu'
+                saveUrlSysMenu.value = '/editSysMenu'
   disabled.value = true
   sysMenu.value = {}
   sysMenu.value.id = row['id']
@@ -347,7 +347,7 @@ const showEdit = (idx,row) => {
   sysMenu.value.pid = pid
   sysMenu.value.icon = row['icon']
   sysMenu.value.title = row['title']
-  sysMenu.value.type = row['type']+''
+  sysMenu.value.type = row['type']
   sysMenu.value.tableName = row['tableName']
   sysMenu.value.pageName = row['pageName']
   sysMenu.value.sort = row['sort']
@@ -357,6 +357,7 @@ const sysMenuFrom = ref()
 const saveSysMenu = () =>{
   sysMenuFrom.value.validate((valid) => {
     if(valid) {
+      console.log(sysMenu.value)
       let params = Object.assign(sysMenu.value, store.state.dataSource);
       request.post(saveUrlSysMenu.value,params).then((res={})=>{
         dataSysMenu.value = res.data

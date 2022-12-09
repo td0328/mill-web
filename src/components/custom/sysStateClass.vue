@@ -10,7 +10,7 @@
           <el-table-column prop="id" type="selection" width="30"></el-table-column>
           <el-table-column prop="name" :show-overflow-tooltip=true  label="名称">
             <template #header>
-              <el-button @click="this.dialogDataSource=true">连接库</el-button>
+              <el-button @click="dialogDataSource=true">连接库</el-button>
               <el-button v-if="btnNewSysStateClass&&toolUtils.getPermission(name,'add')" @click="addStateClass" >新增</el-button>
               <el-button v-if="btnDeleteSysStateClass&&toolUtils.getPermission(name,'delete')" @click="deleteStateClass">删除</el-button>
             </template>
@@ -79,7 +79,7 @@
             <el-input type="password" v-model="dataSource.password" />
           </el-form-item>
           <el-form-item>
-            <el-button @click="this.dialogDataSource = false">取消</el-button>
+            <el-button @click="dialogDataSource = false">取消</el-button>
             <el-button type="primary" @click="getStateClass">连接</el-button>
           </el-form-item>
         </el-form>

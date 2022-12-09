@@ -8,7 +8,7 @@
           </el-col>
           <el-col :span="18" >
             <div style="float: right;">
-              <el-button @click="this.dialogDataSource=true" class="linkColour" >连接库</el-button>
+              <el-button @click="dialogDataSource=true" class="linkColour" >连接库</el-button>
               <el-button v-if="isShowBtn&&toolUtils.getPermission(name,'add')" type="primary" icon="Plus" @click="addSysDictClass">新增</el-button>
               <el-button v-if="isShowBtn&&toolUtils.getPermission(name,'delete')" type="danger" icon="Delete" @click="deleteSysDictClass">删除</el-button>
             </div>
@@ -70,7 +70,7 @@
             <el-input type="password" v-model="dataSource.password" />
           </el-form-item>
           <el-form-item>
-            <el-button @click="this.dialogDataSource = false">取消</el-button>
+            <el-button @click="dialogDataSource = false">取消</el-button>
             <el-button type="primary" @click="getDictClass">连接</el-button>
           </el-form-item>
         </el-form>

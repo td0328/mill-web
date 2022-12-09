@@ -18,7 +18,7 @@ const service = axios.create({
     baseURL: 'http://127.0.0.1:8081',
     // 定义统一的请求头部
     headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
     },
     // 配置请求超时时间
     timeout: 60000,

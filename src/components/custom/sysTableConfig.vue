@@ -12,7 +12,7 @@
                 <el-table-column type="selection" width="30"></el-table-column>
             <el-table-column prop="tableName" :show-overflow-tooltip=true  label="表名称">
               <template #header>
-                <el-button @click="this.dialogDataSource=true" class="linkColour" >连接库</el-button>
+                <el-button @click="dialogDataSource=true" class="linkColour" >连接库</el-button>
                 <el-button v-if="btnDeleteSysTableConfig&&toolUtils.getPermission(name,'delete')" @click="deleteTile" class="linkColour" >删除</el-button>
                 <el-button v-if="btnCreateCode" class="linkColour" >代码生成</el-button>
               </template>
@@ -290,7 +290,7 @@
             <el-input type="password" v-model="dataSource.password" />
           </el-form-item>
           <el-form-item>
-            <el-button @click="this.dialogDataSource = false">取消</el-button>
+            <el-button @click="dialogDataSource = false">取消</el-button>
             <el-button type="primary" @click="getTableConfig">连接</el-button>
           </el-form-item>
         </el-form>
@@ -591,6 +591,7 @@ const saveColumnConfig = () => {
   columnConfigFrom.value.validate((valid) => {
     if(valid) {
       let params = Object.assign(columnConfig.value, store.state.dataSource);
+      params['columnDateType'] = columnConfig.value['dateType']
       request.post('/'+dataSource.value.dataType+'/editColumnConfig',params).then((res={})=>{
         let newColumn = res.data
         for(let i=0;i<tableConfig.value.columns.length;i++){
